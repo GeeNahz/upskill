@@ -1,4 +1,4 @@
-# Identicon
+# PROJECT NAME
 
 **TODO: Add description**
 
