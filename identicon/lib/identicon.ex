@@ -1,5 +1,5 @@
 defmodule Identicon do
-  alias Vix.Vips.Image, as: VImage
+  alias Image
 
   def main(input) do
     input
@@ -13,10 +13,8 @@ defmodule Identicon do
   end
 
   def save_image(svg, input) do
-    # File.write("#{input}.png", image)
-    {:ok, image} = VImage.new_from_buffer(svg, "", scale: 1)
-    png = VImage.write_to_buffer(image, ".png")
-    File.write("#{input}.png", png)
+    img = Image.from_svg!(svg, scale: 1.0)
+    Image.write(img, "#{input}.png")
   end
 
   def draw_image(%Identicon.Image{color: {r, g, b}, pixel_map: pixel_map}) do
