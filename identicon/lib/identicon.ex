@@ -1,4 +1,6 @@
 defmodule Identicon do
+  alias Vix.Vips.Image, as: VImage
+
   def main(input) do
     input
     |> has_input()
@@ -10,19 +12,44 @@ defmodule Identicon do
     |> save_image(input)
   end
 
-  def save_image(image, input) do
-    File.write("#{input}.png", image)
+  def save_image(svg, input) do
+    # File.write("#{input}.png", image)
+    {:ok, image} = VImage.new_from_buffer(svg, "", scale: 1)
+    png = VImage.write_to_buffer(image, ".png")
+    File.write("#{input}.png", png)
   end
 
-  def draw_image(%Identicon.Image{color: color, pixel_map: pixel_map}) do
-    image = :egd.create(250, 250)
-    color = :egd.color(color)
+  def draw_image(%Identicon.Image{color: {r, g, b}, pixel_map: pixel_map}) do
+    color = "rgb(#{r}, #{g}, #{b})"
 
-    Enum.each(pixel_map, fn {start, stop} ->
-      :egd.filledRectangle(image, start, stop, color)
-    end)
+    rects =
+      Enum.map(pixel_map, fn {{x1, y1}, {x2, y2}} ->
+        width = x2 - x1
+        height = y2 - y1
 
-    :egd.render(image)
+        rect = """
+        <rect x="#{x1}" y="#{y1}" width="#{width}" height="#{height}" fill="#{color}" />
+        """
+
+        rect
+      end)
+      |> Enum.join("\n")
+
+    svg = """
+      <svg
+      xlms="https://www.w3.org/2000/svg"
+      height="200"
+      width="200"
+      viewBox="0 0 250 250"
+      >
+      <rect width="250" height="250" fill="white" />
+      <g>
+      #{rects}
+      </g>
+      </svg>
+    """
+
+    svg
   end
 
   def build_pixel_map(%Identicon.Image{grid: grid} = image) do
