@@ -1,8 +1,8 @@
-package main
+package hello
 
 import "fmt"
 import "rsc.io/quote"
 
-func main() {
+func hello() {
 	fmt.Println(quote.Go())
 }
