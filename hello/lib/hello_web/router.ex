@@ -2,7 +2,7 @@ defmodule HelloWeb.Router do
   use HelloWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {HelloWeb.Layouts, :root}
@@ -19,24 +19,26 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get("/redirect_test", PageController, :redirect_test)
+
     get("/hello", HelloController, :index)
     get("/hello/:messenger", HelloController, :show)
 
-    resources("/users", UserController) do
-      resources("/posts", PostController)
-    end
+    # resources("/users", UserController) do
+    #   resources("/posts", PostController)
+    # end
 
-    resources("/posts", PostController, only: [:index, :show])
-    resources("/comments", CommentController, except: [:delete])
-    resources("/reviews", ReviewController)
+    # resources("/posts", PostController, only: [:index, :show])
+    # resources("/comments", CommentController, except: [:delete])
+    # resources("/reviews", ReviewController)
   end
 
   scope("/admin", HelloWeb.Admin) do
     pipe_through :browser
 
-    resources("/images", ImageController)
-    resources("/reviews", ReviewController)
-    resources("/users", UserController)
+    # resources("/images", ImageController)
+    # resources("/reviews", ReviewController)
+    # resources("/users", UserController)
   end
 
   # Other scopes may use custom stacks.
@@ -44,9 +46,9 @@ defmodule HelloWeb.Router do
     pipe_through :api
 
     scope("/v1", V1) do
-      resources("/images", ImageController)
-      resources("/reviews", ReviewController)
-      resources("/users", UserController)
+      # resources("/images", ImageController)
+      # resources("/reviews", ReviewController)
+      # resources("/users", UserController)
     end
   end
 
