@@ -23,3 +23,5 @@ erl_crash.dump
 identicon-*.tar
 
 .DS_Store
+.expert/
+.elixir-tools/
