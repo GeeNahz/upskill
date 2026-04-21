@@ -1,0 +1,21 @@
+<%!-- <Layouts.flash_group flash={@flash} /> --%>
+
+<Layouts.app flash={@flash}>
+  <h1>Welcome to SHOP!</h1>
+  <h2>This is the best video game e-commerce store</h2>
+
+  <hr class="my-10" />
+
+  <form>
+    <select class="border" name="console" id="console">
+      <option value="PC">PC</option>
+      <option value="xbox">Xbox</option>
+      <option value="playstation">Playstation</option>
+      <option value="nintendo">Nintendo</option>
+    </select>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <p class="mt-8">Selected console: {@console}</p>
+</Layouts.app>
