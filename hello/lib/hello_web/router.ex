@@ -2,13 +2,13 @@ defmodule HelloWeb.Router do
   use HelloWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html", "json"]
+    plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {HelloWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug(HelloWeb.Plugs.Locale, "en")
+    plug HelloWeb.Plug.Locale, "en"
   end
 
   pipeline :api do
@@ -19,38 +19,14 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get("/redirect_test", PageController, :redirect_test)
-
-    get("/hello", HelloController, :index)
-    get("/hello/:messenger", HelloController, :show)
-
-    # resources("/users", UserController) do
-    #   resources("/posts", PostController)
-    # end
-
-    # resources("/posts", PostController, only: [:index, :show])
-    # resources("/comments", CommentController, except: [:delete])
-    # resources("/reviews", ReviewController)
-  end
-
-  scope("/admin", HelloWeb.Admin) do
-    pipe_through :browser
-
-    # resources("/images", ImageController)
-    # resources("/reviews", ReviewController)
-    # resources("/users", UserController)
+    get "/hello", HelloController, :index
+    get "/hello/:messenger", HelloController, :show
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", HelloWeb do
-    pipe_through :api
-
-    scope("/v1", V1) do
-      # resources("/images", ImageController)
-      # resources("/reviews", ReviewController)
-      # resources("/users", UserController)
-    end
-  end
+  # scope "/api", HelloWeb do
+  #   pipe_through :api
+  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:hello, :dev_routes) do

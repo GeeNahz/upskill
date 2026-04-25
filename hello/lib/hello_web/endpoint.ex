@@ -7,7 +7,7 @@ defmodule HelloWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_hello_key",
-    signing_salt: "w1ECa731",
+    signing_salt: "yj1G7xku",
     same_site: "Lax"
   ]
 
@@ -51,14 +51,14 @@ defmodule HelloWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug(:introspect)
-  plug(HelloWeb.Router)
+  plug :introspect
+  plug HelloWeb.Router
 
-  def introspect(conn, _opts) do
+  def introspect(%Plug.Conn{} = conn, _opts) do
     IO.puts("""
-      Verb: #{inspect(conn.method)}
-      Host: #{inspect(conn.host)}
-      Headers: #{inspect(conn.req_headers)}
+    Verb: #{inspect(conn.method)}
+    Host: #{inspect(conn.host)}
+    Headers: #{inspect(conn.req_headers)}
     """)
 
     conn

@@ -20,7 +20,7 @@ config :hello, HelloWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Hello.PubSub,
-  live_view: [signing_salt: "HQX21EX4"]
+  live_view: [signing_salt: "ENy4UZ4g"]
 
 # Configure the mailer
 #
