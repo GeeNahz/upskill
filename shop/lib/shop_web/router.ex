@@ -22,11 +22,21 @@ defmodule ShopWeb.Router do
     get "/", PageController, :home
     get "/products", ProductController, :index
     get "/products/:id", ProductController, :show
+
+    # resources "/products", ProductController, only: [:index, :show]
+    # resources "/users", UserController, only: [:index] do
+    #   resources "/posts", PostController, except: [:update, :new, :edit]
+    # end
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", ShopWeb do
   #   pipe_through :api
+  #
+  #   # scope "/v1" do
+  #   #   get "/products", ProductController, :index
+  #   #   get "/products/:id", ProductController, :show
+  #   # end
   # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

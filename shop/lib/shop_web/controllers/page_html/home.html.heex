@@ -6,6 +6,8 @@
 
   <hr class="my-10" />
 
+  <p>Select your favorite console:</p>
+
   <form>
     <select class="border" name="console" id="console">
       <option value="PC">PC</option>
@@ -18,4 +20,6 @@
   </form>
 
   <p class="mt-8">Selected console: {@console}</p>
+
+  <p :if={@promo}>You have a promotional code!</p>
 </Layouts.app>
