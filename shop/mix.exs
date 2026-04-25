@@ -21,7 +21,7 @@ defmodule Shop.MixProject do
   def application do
     [
       mod: {Shop.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
